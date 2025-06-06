@@ -5,6 +5,8 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -28,4 +30,11 @@ public class UserRepository {
     public void deleteByAlgama(String algama) {
         userTable.deleteItem(r -> r.key(k -> k.partitionValue(algama)));
     }
+
+    public List<User> findAll() {
+    List<User> users = new ArrayList<>();
+    userTable.scan().items().forEach(users::add);
+    return users;
+}
+
 }

@@ -12,28 +12,27 @@ import java.util.List;
 public class UserController {
   private final UserService service;
 
-public UserController(UserService service) {
+  public UserController(UserService service) {
     this.service = service;
-}
+  }
 
-@GetMapping
-public List<User> getAll() {
+  @GetMapping
+  public List<User> getAll() {
     return service.getAll();
-}
+  }
 
-@GetMapping("/{id}")
-public User getById(@PathVariable String id) {
+  @GetMapping("/{id}")
+  public User getById(@PathVariable String id) {
     return service.getById(id);
-}
+  }
 
-@PostMapping
-public User create(@RequestBody User user) {
+  @PostMapping
+  public User create(@RequestBody User user) {
     return service.save(user);
-}
+  }
 
-@DeleteMapping("/{id}")
-public void delete(@PathVariable String id) {
+  @DeleteMapping("/{id}")
+  public void delete(@PathVariable String id) {
     service.delete(id);
-}
-
+  }
 }

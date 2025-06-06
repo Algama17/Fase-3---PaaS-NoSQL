@@ -1,16 +1,15 @@
 package com.example.demo.user;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
-@Data
+@DynamoDbBean
 @AllArgsConstructor
 @NoArgsConstructor
-@DynamoDbBean
 public class User {
-   private String algama;  // debe coincidir con el nombre de la clave de partición en AWS
+    private String algama;
     private String name;
     private String email;
 
@@ -18,7 +17,24 @@ public class User {
     public String getAlgama() {
         return algama;
     }
+
     public void setAlgama(String algama) {
         this.algama = algama;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

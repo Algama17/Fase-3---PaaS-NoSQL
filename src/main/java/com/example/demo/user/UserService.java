@@ -12,29 +12,27 @@ import java.util.*;
 
 @Service
 public class UserService {
- private final DynamoDbTable<User> userTable;
 
-public UserService(DynamoDbEnhancedClient enhancedClient) {
-    this.userTable = enhancedClient.table("User", TableSchema.fromBean(User.class));
-}
+    private final UserRepository repository;
 
-public List<User> getAll() {
-    List<User> users = new ArrayList<>();
-    userTable.scan().items().forEach(users::add);
-    return users;
-}
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
 
-public User getById(String id) {
-    return userTable.getItem(Key.builder().partitionValue(id).build());
-}
+    public List<User> getAll() {
+        return repository.findAll();
+    }
 
-public User save(User user) {
-    userTable.putItem(user);
-    return user;
-}
+    public User getById(String id) {
+        return repository.findByAlgama(id).orElse(null);
+    }
 
-public void delete(String id) {
-    userTable.deleteItem(Key.builder().partitionValue(id).build());
-}
+    public User save(User user) {
+        repository.save(user);
+        return user;
+    }
 
+    public void delete(String id) {
+        repository.deleteByAlgama(id);
+    }
 }
