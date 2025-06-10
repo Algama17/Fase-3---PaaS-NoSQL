@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class AwsProperties {
 
     private String region;
-    private String dynamodbEndpoint; // opcional, solo si usas DynamoDB local
+    private String dynamodbEndpoint;
 
     public String getRegion() {
         return region;
