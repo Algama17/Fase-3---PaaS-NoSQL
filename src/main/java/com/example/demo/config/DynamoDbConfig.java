@@ -27,12 +27,6 @@ public class DynamoDbConfig {
         DynamoDbClientBuilder builder = DynamoDbClient.builder()
             .region(Region.of(awsProperties.getRegion()))
             .credentialsProvider(DefaultCredentialsProvider.create());
-
-        // Si usaras DynamoDB local, aquí iría endpointOverride:
-        // if (awsProperties.getDynamodbEndpoint() != null) {
-        //     builder.endpointOverride(URI.create(awsProperties.getDynamodbEndpoint()));
-        // }
-
         return builder.build();
     }
 

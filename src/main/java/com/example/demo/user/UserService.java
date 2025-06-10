@@ -1,12 +1,5 @@
 package com.example.demo.user;
 
-
-import com.example.demo.user.User;
-import org.springframework.stereotype.Service;
-import software.amazon.awssdk.enhanced.dynamodb.*;
-import software.amazon.awssdk.enhanced.dynamodb.Key;
-import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
-import java.util.*;
 import org.springframework.stereotype.Service;
 import java.util.*;
 

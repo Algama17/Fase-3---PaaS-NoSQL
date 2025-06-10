@@ -1,10 +1,6 @@
 package com.example.demo.user;
 
-
-import com.example.demo.user.User;
-import com.example.demo.user.UserService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
