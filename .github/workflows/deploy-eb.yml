@@ -34,10 +34,21 @@ jobs:
         EB_ENV="Alberto-PaaS-NoSQL-env"
         APP_NAME="Alberto - PaaS - NoSQL"
         VERSION_LABEL="v-$(date +%Y%m%d%H%M%S)"
+        ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+        BUCKET="elasticbeanstalk-us-west-1-$ACCOUNT_ID"
         JAR_PATH="target/Fase-3-PaaS-NoSQL-0.0.1-SNAPSHOT.jar"
+        S3_KEY="$VERSION_LABEL.jar"
 
-        aws elasticbeanstalk create-application-version --application-name "$APP_NAME" --version-label "$VERSION_LABEL" --source-bundle S3Bucket="elasticbeanstalk-us-west-1-$(aws sts get-caller-identity --query Account --output text)",S3Key="$VERSION_LABEL.jar"
+        # Subir el .jar a S3
+        aws s3 cp $JAR_PATH s3://$BUCKET/$S3_KEY
 
-        aws s3 cp $JAR_PATH s3://elasticbeanstalk-us-west-1-$(aws sts get-caller-identity --query Account --output text)/$VERSION_LABEL.jar
+        # Crear una nueva versión de la aplicación en Elastic Beanstalk
+        aws elasticbeanstalk create-application-version \
+          --application-name "$APP_NAME" \
+          --version-label "$VERSION_LABEL" \
+          --source-bundle S3Bucket="$BUCKET",S3Key="$S3_KEY"
 
-        aws elasticbeanstalk update-environment --environment-name "$EB_ENV" --version-label "$VERSION_LABEL"
+        # Actualizar el entorno con la nueva versión
+        aws elasticbeanstalk update-environment \
+          --environment-name "$EB_ENV" \
+          --version-label "$VERSION_LABEL"
