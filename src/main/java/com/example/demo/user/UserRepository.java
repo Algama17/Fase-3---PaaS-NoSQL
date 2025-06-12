@@ -1,12 +1,7 @@
 package com.example.demo.user;
 import org.springframework.stereotype.Repository;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
-import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import software.amazon.awssdk.enhanced.dynamodb.*;
+import java.util.*;
 
 @Repository
 public class UserRepository {
