@@ -1,0 +1,43 @@
+name: Build and Deploy to Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    - name: Build with Maven
+      run: mvn clean package
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-region: us-west-1
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Deploy to Elastic Beanstalk
+      run: |
+        EB_ENV="Alberto-PaaS-NoSQL-env"
+        APP_NAME="Alberto - PaaS - NoSQL"
+        VERSION_LABEL="v-$(date +%Y%m%d%H%M%S)"
+        JAR_PATH="target/Fase-3-PaaS-NoSQL-0.0.1-SNAPSHOT.jar"
+
+        aws elasticbeanstalk create-application-version --application-name "$APP_NAME" --version-label "$VERSION_LABEL" --source-bundle S3Bucket="elasticbeanstalk-us-west-1-$(aws sts get-caller-identity --query Account --output text)",S3Key="$VERSION_LABEL.jar"
+
+        aws s3 cp $JAR_PATH s3://elasticbeanstalk-us-west-1-$(aws sts get-caller-identity --query Account --output text)/$VERSION_LABEL.jar
+
+        aws elasticbeanstalk update-environment --environment-name "$EB_ENV" --version-label "$VERSION_LABEL"
