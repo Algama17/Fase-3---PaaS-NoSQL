@@ -6,9 +6,17 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "aws")
 public class AwsProperties {
-
-    private String region;
     private String dynamodbEndpoint;
+    private String region;
+
+    // Getters and setters
+    public String getDynamodbEndpoint() {
+        return dynamodbEndpoint;
+    }
+
+    public void setDynamodbEndpoint(String dynamodbEndpoint) {
+        this.dynamodbEndpoint = dynamodbEndpoint;
+    }
 
     public String getRegion() {
         return region;
@@ -16,13 +24,5 @@ public class AwsProperties {
 
     public void setRegion(String region) {
         this.region = region;
-    }
-
-    public String getDynamodbEndpoint() {
-        return dynamodbEndpoint;
-    }
-
-    public void setDynamodbEndpoint(String dynamodbEndpoint) {
-        this.dynamodbEndpoint = dynamodbEndpoint;
     }
 }

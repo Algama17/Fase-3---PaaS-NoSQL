@@ -1,0 +1,14 @@
+{
+    "properties": [
+        {
+            "name": "aws.dynamodb.endpoint",
+            "type": "java.lang.String",
+            "description": "Endpoint for DynamoDB (e.g., http://localhost:8000 for DynamoDB Local)."
+        },
+        {
+            "name": "aws.region",
+            "type": "java.lang.String",
+            "description": "AWS region for DynamoDB (e.g., us-west-1)."
+        }
+    ]
+}

@@ -12,6 +12,11 @@ public class UserController {
     this.service = service;
   }
 
+  @GetMapping("/")
+  public String home() {
+    return "Bienvenido a la API de usuarios";
+  }
+
   @GetMapping
   public List<User> getAll() {
     return service.getAll();
